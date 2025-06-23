@@ -169,6 +169,8 @@ Download the zip file first to use this library and uncompress it to a folder na
 | RaspberryPi2 |      |        |   √    |      |
 | RaspberryPi3 |      |        |   √    |      |
 | RaspberryPi4 |  √   |        |        |      |
+| RaspberryPi Pico W |  √   |        |        |   I2C Only   |
+
 
 * Python Version
 
@@ -176,11 +178,14 @@ Download the zip file first to use this library and uncompress it to a folder na
 | ------- | :--: | :----: | :----: | ---- |
 | Python2 |  √   |        |        |      |
 | Python3 |  √   |        |        |      |
+| MicroPython |  √   |        |        |  Version v1.25.0  |
 
 ## History
 
 - 02,04, 2021 - Version 2.0 released.
+- 23, 06, 2025 - Forked.
 
 ## Credits
 
-Written by PengKaixing(kaixing.peng@dfrobot.com), 2021. (Welcome to our [website](https://www.dfrobot.com/))
+Written by PengKaixing(kaixing.peng@dfrobot.com), 2021. (Welcome to our [website](https://www.dfrobot.com/)) <br/>
+Updated by Aqirito, 2025, (Member of [Kinabalu Coders](https://kinabalucoders.org/))
