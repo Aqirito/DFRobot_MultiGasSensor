@@ -76,7 +76,8 @@ The `uDFRobot_MultiGasSensor.py` library provides the following key methods for 
 - `read_gas_concentration()`: Reads the current gas concentration. Updates `gas.gastype`, `gas.gasconcentration`, and `gas.temp` properties.
 - `read_temp()`: Reads the onboard temperature of the sensor.
 - `read_volatage_data()`: Reads the raw analog voltage output from the gas. 
-- `probe.set_threshold_alarm(switchof, threshold, gasType)`: Configures the alarm threshold for a specific gas type. switchof can be `gas.ON` or gas.OFF.set_temp_compensation(tempswitch): Enables or disables temperature compensation for gas concentration readings. tempswitch can be `gas.ON` or `gas.OFF`.
+- `probe.set_threshold_alarm(switchof, threshold, gasType)`: Configures the alarm threshold for a specific gas type. switchof can be `gas.ON` or `gas.OFF`.
+`set_temp_compensation(tempswitch)`: Enables or disables temperature compensation for gas concentration readings. tempswitch can be `gas.ON` or `gas.OFF`.
 - `data_is_available()`: In proactive reporting mode, checks if new data is available from the sensor.
 - `change_i2c_addr_group(group)`: Changes the I2C address group of the sensor.
 
@@ -156,6 +157,6 @@ This setup allows you to efficiently manage multiple DFRobot Multi-Gas Sensors o
 - **Root Permissions (Raspberry Pi OS)**: For full Raspberry Pi OS (not Pico), if you encounter permissions issues, you might need to run Python scripts with sudo. This is generally not required for MicroPython on Pico as you interact directly with the board's filesystem and interpreter.
 - **Temperature Compensation**: The temperature compensation logic in the MicroPython library `(uDFRobot_MultiGasSensor.py)` has been noted to be a close replication of the C++ library. Ensure you enable it with `set_temp_compensation(gas.ON)` for more accurate readings.
 - **Gas Type for Alarm**: When setting an alarm, ensure that the `gas.gastype` property has been populated by a prior call to `read_gas_concentration()` or is explicitly set if you know the probe type.
-**Physical Connections**: Double-check all wiring, especially for I2C (SDA, SCL), power (VCC, GND), and the alarm pin if you're using that feature.
+- **Physical Connections**: Double-check all wiring, especially for I2C (SDA, SCL), power (VCC, GND), and the alarm pin if you're using that feature.
 
 By following this guide, you should be able to successfully integrate your DFRobot Multi-Gas Sensor with a Raspberry Pi Pico for various gas detection applications.
