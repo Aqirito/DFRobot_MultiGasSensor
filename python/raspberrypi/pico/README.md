@@ -77,7 +77,7 @@ The `uDFRobot_MultiGasSensor.py` library provides the following key methods for 
 - `read_temp()`: Reads the onboard temperature of the sensor.
 - `read_volatage_data()`: Reads the raw analog voltage output from the gas. 
 - `probe.set_threshold_alarm(switchof, threshold, gasType)`: Configures the alarm threshold for a specific gas type. switchof can be `gas.ON` or `gas.OFF`.
-`set_temp_compensation(tempswitch)`: Enables or disables temperature compensation for gas concentration readings. tempswitch can be `gas.ON` or `gas.OFF`.
+- `set_temp_compensation(tempswitch)`: Enables or disables temperature compensation for gas concentration readings. tempswitch can be `gas.ON` or `gas.OFF`.
 - `data_is_available()`: In proactive reporting mode, checks if new data is available from the sensor.
 - `change_i2c_addr_group(group)`: Changes the I2C address group of the sensor.
 
