@@ -137,11 +137,11 @@ def main_loop():
     while True:
         # Read from NO2 sensor
         no2_concentration = SENSOR_NO2.read_gas_concentration()
-        print(f"NO2 Sensor ({hex(ADDR_NO2_SENSOR)}): {SENSOR_NO2.gastype} concentration: {no2_concentration:.2f} {SENSOR_NO2.gasunits} | Temp: {SENSOR_NO2.temp:.1f}°C")
+        print(f"NO2 Sensor ({hex(ADDR_NO2_SENSOR)}): {SENSOR_NO2.gastype} concentration: {no2_concentration:.2f} | Temp: {SENSOR_NO2.temp:.1f}°C")
 
         # Read from CO sensor
         co_concentration = SENSOR_CO.read_gas_concentration()
-        print(f"CO Sensor ({hex(ADDR_CO_SENSOR)}): {SENSOR_CO.gastype} concentration: {co_concentration:.2f} {SENSOR_CO.gasunits} | Temp: {SENSOR_CO.temp:.1f}°C")
+        print(f"CO Sensor ({hex(ADDR_CO_SENSOR)}): {SENSOR_CO.gastype} concentration: {co_concentration:.2f} | Temp: {SENSOR_CO.temp:.1f}°C")
 
         time.sleep(2) # Read every 2 seconds
 
