@@ -19,7 +19,6 @@ UART_MODE = 0x02
 
 sendbuf = [0] * 9
 recvbuf = [0] * 9
-tempSwitch = 0
 temp = 0.0
 
 
@@ -77,6 +76,7 @@ class DFRobot_MultiGasSensor(object):
     gasconcentration = 0.0
     gastype = ""
     temp = 0.0
+    tempSwitch = 0
 
     def __init__(self, Baud, i2cbus):
         if i2cbus:
@@ -307,7 +307,7 @@ class DFRobot_MultiGasSensor(object):
             self.gastype = ""
         # gastype = recvbuf[4]
         decimal_digits = recvbuf[5]
-        if tempSwitch == self.OFF:
+        if self.tempSwitch == self.OFF:
             if decimal_digits == 1:
                 Con = Con * 0.1
             elif decimal_digits == 2:
@@ -513,9 +513,8 @@ class DFRobot_MultiGasSensor(object):
                      ON  Turn on temperature compensation
                      OFF Turn off temperature compensation
         """
-        global tempSwitch, temp
-        tempSwitch = tempswitch
-        temp = self.read_temp()
+        self.tempSwitch = tempswitch
+        self.temp = self.read_temp()
 
     def read_volatage_data(self):
         """!
