@@ -301,9 +301,11 @@ class DFRobot_MultiGasSensor(object):
             self.gastype = "HF"
         elif recvbuf[4] == 0x45:
             self.gastype = "PH3"
+        elif recvbuf[4] == 0x2B:
+            self.gastype = "SO2"
         else:
             self.gastype = ""
-        gastype = recvbuf[4]
+        # gastype = recvbuf[4]
         decimal_digits = recvbuf[5]
         if tempSwitch == self.OFF:
             if decimal_digits == 1:
@@ -311,23 +313,23 @@ class DFRobot_MultiGasSensor(object):
             elif decimal_digits == 2:
                 Con = Con * 0.01
             return Con
-        if gastype == "O2":
+        if self.gastype == "O2":
             pass
-        elif gastype == "CO":
+        elif self.gastype == "CO":
             if ((temp) > -20) and ((temp) < 20):
                 Con = Con / (0.005 * (temp) + 0.9)
             elif ((temp) > 20) and ((temp) < 40):
                 Con = Con / (0.005 * (temp) + 0.9) - (0.3 * (temp) - 6)
             else:
                 Con = 0.0
-        elif gastype == "H2S":
+        elif self.gastype == "H2S":
             if ((temp) > -20) and ((temp) < 20):
                 Con = Con / (0.006 * (temp) + 0.92)
             elif ((temp) > 20) and ((temp) < 40):
                 Con = Con / (0.006 * (temp) + 0.92) - (0.015 * (temp) + 2.4)
             else:
                 Con = 0.0
-        elif gastype == "NO2":
+        elif self.gastype == "NO2":
             if ((temp) > -20) and ((temp) < 0):
                 Con = Con / (0.005 * (temp) + 0.9) - (-0.0025 * (temp))
             elif ((temp) > 0) and ((temp) < 20):
@@ -336,7 +338,7 @@ class DFRobot_MultiGasSensor(object):
                 Con = Con / (0.005 * (temp) + 0.9) - (0.0025 * (temp) + 0.1)
             else:
                 Con = 0.0
-        elif gastype == "O3":
+        elif self.gastype == "O3":
             if ((temp) > -20) and ((temp) < 0):
                 Con = Con / (0.015 * (temp) + 1.1) - 0.05
             elif ((temp) > 0) and ((temp) < 20):
@@ -345,7 +347,7 @@ class DFRobot_MultiGasSensor(object):
                 Con = Con / 1.1 - (-0.05 * (temp) + 0.3)
             else:
                 Con = 0.0
-        elif gastype == "CL2":
+        elif self.gastype == "CL2":
             if ((temp) > -20) and ((temp) < 0):
                 Con = Con / (0.015 * (temp) + 1.1) - (-0.0025 * (temp))
             elif ((temp) > 0) and ((temp) < 20):
@@ -354,7 +356,7 @@ class DFRobot_MultiGasSensor(object):
                 Con = Con / 1.1 - (0.06 * (temp) - 0.12)
             else:
                 Con = 0.0
-        elif gastype == "NH3":
+        elif self.gastype == "NH3":
             if ((temp) > -20) and ((temp) < 0):
                 Con = Con / (0.08 * (temp) + 3.98) - (-0.005 * (temp) + 0.3)
             elif ((temp) > 0) and ((temp) < 20):
@@ -363,12 +365,12 @@ class DFRobot_MultiGasSensor(object):
                 Con = Con / (0.004 * (temp) + 1.08) - (-0.1 * (temp) + 2)
             else:
                 Con = 0.0
-        elif gastype == "H2":
+        elif self.gastype == "H2":
             if ((temp) > -20) and ((temp) < 40):
                 Con = Con / (0.74 * (temp) + 0.007) - 5
             else:
                 Con = 0.0
-        elif gastype == "HF":
+        elif self.gastype == "HF":
             if ((temp) > -20) and ((temp) < 0):
                 Con = (Con / 1) - (-0.0025 * (temp))
             elif ((temp) > 0) and ((temp) < 20):
@@ -377,9 +379,16 @@ class DFRobot_MultiGasSensor(object):
                 Con = Con / 1 - (0.0375 * (temp) - 0.85)
             else:
                 Con = 0.0
-        elif gastype == "PH3":
+        elif self.gastype == "PH3":
             if ((temp) > -20) and ((temp) < 40):
                 Con = Con / (0.005 * (temp) + 0.9)
+        elif self.gastype == "SO2":
+            if ((temp) > -40) and ((temp) >= 40):
+                Con = Con / (0.006 * (temp) + 0.95)
+            elif (temp) > 40 and ((temp) >= 60):
+                Con = Con / (0.006 * (temp + 0.95) - (0.05 * (temp) - 2))
+            else:
+                Con = 0.0
         else:
             Con = 0.0
         if Con < 0:
@@ -504,6 +513,7 @@ class DFRobot_MultiGasSensor(object):
                      ON  Turn on temperature compensation
                      OFF Turn off temperature compensation
         """
+        global tempSwitch, temp
         tempSwitch = tempswitch
         temp = self.read_temp()
 
@@ -619,6 +629,7 @@ class DFRobot_MultiGasSensor_I2C(DFRobot_MultiGasSensor):
             # print(f"read data addr={self.__addr}, reg={reg}, length={length}")
             rslt = self.i2cbus.readfrom_mem(self.__addr, reg, length)
             recvbuf = list(rslt)
+            # print("recvbuf", recvbuf[4])
         except BaseException as e:
             rslt = -1
         return length
